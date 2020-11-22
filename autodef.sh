@@ -33,7 +33,7 @@ def_all()
 	then
 		files=`find . -type f -name "*.h"`
 	fi
-	
+
 	for each in $files
 	do
 		if ! [ -f "$each" ]
@@ -48,7 +48,6 @@ def_all()
 		if [ $no_guard = 1 ]
 		then
 			make_guard $each $guard_name
-			echo "No_guard "$file_name
 		fi
 	done
 }
