@@ -26,25 +26,32 @@ make_guard()
 	fi
 }
 
-files=`find . -type f -name "*.h"`
-for each in $files
-do
-	dos2unix $each
-	file_path=$(dirname $each)"/"
-	file_name=$(basename $each)
-	guard_name=`echo "$file_name" | tr '[a-z]' '[A-Z]' | tr . _`
-	check_guard $each $guard_name
-	if [ $no_guard = 1 ]
-	then
-		make_guard $each $guard_name
-		echo "No_guard "$file_name
-	fi
-done
+def_all()
+{
+	for each in $1
+	do
+		if ! [ -f "$each" ]
+		then
+			touch $each
+		fi
+		dos2unix $each
+		local file_path=$(dirname $each)"/"
+		local file_name=$(basename $each)
+		local guard_name=`echo "$file_name" | tr '[a-z]' '[A-Z]' | tr . _`
+		check_guard $each $guard_name
+		if [ $no_guard = 1 ]
+		then
+			make_guard $each $guard_name
+			echo "No_guard "$file_name
+		fi
+	done
+}
 
-# for i in $*;
-# do
-# 	echo $i
-# done;
-# if [[ -f "$FILE" ]]; then
-#     echo "$FILE exists."
-# fi
+if [ $# = 0 ]
+then
+	files=`find . -type f -name "*.h"`
+else
+	files=$*
+fi
+def_all $files
+
