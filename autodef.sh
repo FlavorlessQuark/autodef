@@ -28,7 +28,13 @@ make_guard()
 
 def_all()
 {
-	for each in $1
+	files=$1
+	if [ $# = 0 ]
+	then
+		files=`find . -type f -name "*.h"`
+	fi
+	
+	for each in $files
 	do
 		if ! [ -f "$each" ]
 		then
@@ -47,11 +53,5 @@ def_all()
 	done
 }
 
-if [ $# = 0 ]
-then
-	files=`find . -type f -name "*.h"`
-else
-	files=$*
-fi
-def_all $files
+def_all $*
 
