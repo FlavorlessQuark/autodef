@@ -3,7 +3,7 @@ Automatic include guard for .h files
 
 # Usage
 
-Just run the autodef.sh, it will add an include guard to all your .h files if they don't already have one
+Just run the autodef.sh, it will add an include guard to all your .h files (in current and subdir) if they don't already have one
 
     ./autodef.sh
 
